@@ -18,6 +18,8 @@ var users = require('./routes/users');
 
 var app = express();
 
+app.listen(process.env.PORT, process.env.IP);
+
 // Setup view engine
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
