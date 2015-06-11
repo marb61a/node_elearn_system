@@ -12,9 +12,12 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local'),Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/elearn');
+var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var classes = require("./routes/classes");
 
 var app = express();
 
@@ -71,9 +74,20 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Makes the object called user available in all views
+app.get('*', function(req, res, next){
+  // put user into res.locals for easy access from templates
+  res.locals.user = req.user || null;
+  if(req.user){
+    res.locals.type = req.user.type;
+  }
+  next();
+});
+
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('classes', classes);
 
 // catch and forward 404 error to error handler
 app.use(function(req, res, next) {
