@@ -18,6 +18,8 @@ var db = mongoose.connection;
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var classes = require("./routes/classes");
+var students = require("./routes/students");
+
 
 var app = express();
 
@@ -87,7 +89,8 @@ app.get('*', function(req, res, next){
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('classes', classes);
+app.use('/classes', classes);
+app.use('/students', students);
 
 // catch and forward 404 error to error handler
 app.use(function(req, res, next) {
