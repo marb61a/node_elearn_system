@@ -9,7 +9,7 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
-var LocalStrategy = require('passport-local'),Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/elearn');
@@ -54,9 +54,7 @@ app.use(passport.session());
 // Express Validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
+    var namespace = param.split('.'), root = namespace.shift(), formParam = root;
 
     while(namespace.length) {
       formParam += '[' + namespace.shift() + ']';
@@ -75,6 +73,9 @@ app.use(flash());
 // Global Vars
 app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);
+  if(req.url == '/'){
+    res.locals.isHome = true;
+  }
   next();
 });
 
@@ -82,8 +83,14 @@ app.use(function (req, res, next) {
 app.get('*', function(req, res, next){
   // put user into res.locals for easy access from templates
   res.locals.user = req.user || null;
-  if(req.user){
+ if(req.user){
     res.locals.type = req.user.type;
+
+    if(req.user.type == 'instructor'){
+      res.locals.isInstructor = true;
+    } else {
+      res.locals.isInstructor = false;
+    }
   }
   next();
 });
@@ -106,7 +113,7 @@ app.use(function(req, res, next) {
 // error handlers
 
 // development error handler
-// will print stacktrace
+// will print a stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
