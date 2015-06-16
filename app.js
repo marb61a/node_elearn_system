@@ -14,11 +14,13 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/elearn');
 var db = mongoose.connection;
+var async = require('async');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var classes = require("./routes/classes");
 var students = require("./routes/students");
+var instructors = require("./routes/instructors");
 
 
 var app = express();
@@ -91,6 +93,8 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/classes', classes);
 app.use('/students', students);
+app.use('/instructors', instructors);
+
 
 // catch and forward 404 error to error handler
 app.use(function(req, res, next) {
