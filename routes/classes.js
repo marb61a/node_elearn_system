@@ -1,10 +1,10 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
 
-var Class = require("../models/class");
+Class = require('../models/class');
 
-router.get('/', function(req, res, next){
-    Class.getClasses(function(err, classes){
+router.get('/', function(req, res, next) {
+	Class.getClasses(function(err, classes){
 		if(err){
 			console.log(err);
 			res.send(err);
@@ -14,8 +14,8 @@ router.get('/', function(req, res, next){
 	}, 3);
 });
 
-router.get('/:id/details', function(req, res, next){
-    Class.getClassById([req.params.id],function(err, classname){
+router.get('/:id/details', function(req, res, next) {
+	Class.getClassById([req.params.id],function(err, classname){
 		if(err){
 			console.log(err);
 			res.send(err);
@@ -25,9 +25,8 @@ router.get('/:id/details', function(req, res, next){
 	});
 });
 
-
 router.get('/:id/lessons', function(req, res, next) {
-    Class.getClassById([req.params.id],function(err, classname){
+	Class.getClassById([req.params.id],function(err, classname){
 		if(err){
 			console.log(err);
 			res.send(err);
@@ -37,22 +36,20 @@ router.get('/:id/lessons', function(req, res, next) {
 	});
 });
 
-router.get('/:id/lessons/:lesson_id',ensureAuthenticated, function(req, res, next){
-	Class.getClassById([req.params.id], function(err, classname) {
-	    var lesson;
-	    if(err){
+router.get('/:id/lessons/:lesson_id', ensureAuthenticated, function(req, res, next) {
+	Class.getClassById([req.params.id],function(err, classname){
+		var lesson;
+		if(err){
 			console.log(err);
 			res.send(err);
-		}else{
-			for (i=0; i<classname.lessons.length; i++ ) {
+		} else {
+			for(i=0;i<classname.lessons.length;i++){
 				if(classname.lessons[i].lesson_number == req.params.lesson_id){
 					lesson = classname.lessons[i];
 				}
 			}
-			
 			res.render('classes/lesson', { "class": classname,"lesson": lesson });
 		}
-	    
 	});
 });
 

@@ -33,7 +33,7 @@ router.post('signup', function(req, res, next){
 	var password2 = req.body.password2;
 	var type = req.body.type;
 
-    // Validates the form fialds
+    // Validates the form fields
     req.checkBody('first_name', 'First name field is required').notEmpty();
 	req.checkBody('last_name', 'Last name field is required').notEmpty();
 	req.checkBody('email', 'Email field is required').notEmpty();
@@ -41,11 +41,11 @@ router.post('signup', function(req, res, next){
 	req.checkBody('username', 'Username field is required').notEmpty();
 	req.checkBody('password', 'Password field is required').notEmpty();
 	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-	
+
 	var errors = req.validationErrors();
-	
+
 	if(errors){
-	    res.render('users/signup', {
+		res.render('users/signup', {
     		errors: errors,
     		first_name: first_name,
     		last_name: last_name,
@@ -58,8 +58,8 @@ router.post('signup', function(req, res, next){
     		password: password,
     		password2: password2
     	});
-	} else{
-	    var newUser = new User({
+	} else {
+		var newUser = new User({
 			email: email,
 			username:username,
 			password: password,
@@ -78,7 +78,7 @@ router.post('signup', function(req, res, next){
 			email: email,
 			username:username
 		});
-		
+
 		var newInstructor= new Instructor({
 			first_name: first_name,
 			last_name: last_name,
@@ -101,15 +101,16 @@ router.post('signup', function(req, res, next){
 				console.log('Instructor created');
 			});
 		}
-		
-		req.flash('success', 'User Added');
+
+		req.flash('success','User added');
 		res.redirect('/');
 	}
 });
 
-passport.serializeUser(function(user, done){
-    done(null, user._id);
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
 });
+
 
 passport.deserializeUser(function(id, done) {
   User.getUserById(id, function (err, user) {
@@ -123,6 +124,7 @@ router.post('/login',passport.authenticate('local',{failureRedirect:'/', failure
 	var usertype = req.user.type;
 	res.redirect('/'+usertype+'s/classes');
 });
+
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
@@ -160,6 +162,5 @@ function ensureAuthenticated(req, res, next) {
     }
   res.redirect('/')
 }
-
 
 module.exports = router;
