@@ -21,17 +21,17 @@ router.get('/signup', function(req, res, next) {
 
 router.post('signup', function(req, res, next){
     // Gets the form values
-    var first_name     	= req.body.first_name;
-	var last_name     	= req.body.last_name;
-	var street_address  = req.body.street_address;
-	var city     		= req.body.city;
-	var state    		= req.body.state;
-	var zip     		= req.body.zip;
-	var email    		= req.body.email;
-	var username 		= req.body.username;
-	var password 		= req.body.password;
-	var password2 		= req.body.password2;
-	var type            = req.body.type;
+    var first_name = req.body.first_name;
+	var last_name = req.body.last_name;
+	var street_address = req.body.street_address;
+	var city = req.body.city;
+	var state = req.body.state;
+	var zip  = req.body.zip;
+	var email = req.body.email;
+	var username = req.body.username;
+	var password = req.body.password;
+	var password2 = req.body.password2;
+	var type = req.body.type;
 
     // Validates the form fialds
     req.checkBody('first_name', 'First name field is required').notEmpty();

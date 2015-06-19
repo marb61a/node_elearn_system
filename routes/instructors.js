@@ -2,9 +2,9 @@ var express = require("express");
 var router = express.Router();
 
 
-var Class = require('../models/class');
-var Instructor = require('../models/instructor');
-var User = require('../models/user');
+Class = require('../models/class');
+Instructor = require('../models/instructor');
+User = require('../models/user');
 
 
 router.get('/classes', ensureAuthenticated, function(req, res, next) {
@@ -30,6 +30,26 @@ router.post('/classes/register', function(req, res){
 	});
 
 	req.flash('success', 'You are now registered to teach this class');
+	res.redirect('/instructors/classes');
+});
+
+router.get('/classes/:id/lessons/new', ensureAuthenticated, function(req, res, next) {
+	res.render('instructors/newlesson',{"class_id": req.params.id});
+});
+
+router.post('/classes/:id/lessons/new', ensureAuthenticated, function(req, res, next) {
+	// Get Form Values
+	var info = [];
+	info['class_id'] = req.params.id;
+	info['lesson_number'] = req.body.lesson_number;
+	info['lesson_title'] = req.body.lesson_title;
+	info['lesson_body'] = req.body.lesson_body;
+
+	Class.addLesson(info, function(err, lesson){
+		console.log('Lesson Added');
+	});
+
+	req.flash('success', 'Lesson Added');
 	res.redirect('/instructors/classes');
 });
 
