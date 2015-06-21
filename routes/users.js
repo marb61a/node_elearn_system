@@ -18,8 +18,7 @@ router.get('/signup', function(req, res, next) {
   res.render('users/signup');
 });
 
-
-router.post('signup', function(req, res, next){
+router.post('/signup', function(req, res, next){
     // Gets the form values
     var first_name = req.body.first_name;
 	var last_name = req.body.last_name;
@@ -160,7 +159,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { 
       return next(); 
     }
-  res.redirect('/')
+  res.redirect('/');
 }
 
 module.exports = router;
