@@ -40,10 +40,10 @@ router.get('/classes/:id/lessons/new', ensureAuthenticated, function(req, res, n
 router.post('/classes/:id/lessons/new', ensureAuthenticated, function(req, res, next) {
 	// Get Form Values
 	var info = [];
-	info['class_id'] = req.params.id;
-	info['lesson_number'] = req.body.lesson_number;
-	info['lesson_title'] = req.body.lesson_title;
-	info['lesson_body'] = req.body.lesson_body;
+	info['class_id']  	= req.params.id;
+	info['lesson_number']   = req.body.lesson_number;
+	info['lesson_title']    = req.body.lesson_title;
+	info['lesson_body']    = req.body.lesson_body;
 
 	Class.addLesson(info, function(err, lesson){
 		console.log('Lesson Added');
@@ -53,13 +53,11 @@ router.post('/classes/:id/lessons/new', ensureAuthenticated, function(req, res, 
 	res.redirect('/instructors/classes');
 });
 
-
-function ensureAuthenticated(req, res, next){
-    if(req.isAuthenticated()){
-        return next;
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { 
+      return next(); 
     }
-    
-    res.redirect('/');
+  res.redirect('/')
 }
 
 module.exports = router;

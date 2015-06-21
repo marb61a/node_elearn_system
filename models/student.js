@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 
 // Student Schema
 var studentSchema = mongoose.Schema({
-    first_name: {
+	first_name: {
 		type: String
 	},
 	last_name: {
@@ -24,18 +24,19 @@ var studentSchema = mongoose.Schema({
 		class_id:{type: [mongoose.Schema.Types.ObjectId]},
 		class_title: {type:String}
 	}]
+	
 });
 
 var Student = module.exports = mongoose.model('Student', studentSchema);
 
 module.exports.getStudentByUsername = function(username, callback){
-	var query = {username : username};
+	var query = {username: username};
 	Student.findOne(query, callback);
-}
+};
 
-// Register a student for class
-module.exports.register = function(info, callback){
-	student_username = info['student_username'];
+// Register Student for Class
+module.exports.register = function(info, callback) {
+    student_username = info['student_username'];
     class_id = info['class_id'];
     class_title = info['class_title'];
 
@@ -46,4 +47,4 @@ module.exports.register = function(info, callback){
       {safe: true, upsert: true},
       callback
     );
-}
+};

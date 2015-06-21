@@ -1,8 +1,8 @@
 var mongoose = require("mongoose");
 
-// The Instructor Schema
+// Instrucor Schema
 var instructorSchema = mongoose.Schema({
-    first_name: {
+	first_name: {
 		type: String
 	},
 	last_name: {
@@ -31,11 +31,11 @@ var Instructor = module.exports = mongoose.model('instructor', instructorSchema)
 module.exports.getInstructorByUsername = function(username, callback){
 	var query = {username: username};
 	Instructor.findOne(query, callback);
-}
+};
 
-// Register an instructor for a class
-module.exports.register = function(info, callback){
-	instructor_username = info['instructor_username'];
+// Register Instructor for Class
+module.exports.register = function(info, callback) {
+    instructor_username = info['instructor_username'];
     class_id = info['class_id'];
     class_title = info['class_title'];
 
@@ -46,4 +46,4 @@ module.exports.register = function(info, callback){
       {safe: true, upsert: true},
       callback
     );
-}
+};
