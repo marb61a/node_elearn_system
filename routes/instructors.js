@@ -1,6 +1,5 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
-
 
 Class = require('../models/class');
 Instructor = require('../models/instructor');

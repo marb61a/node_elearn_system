@@ -36,7 +36,7 @@ module.exports.getUserByUsername = function(username, callback){
 // Save Student
 module.exports.saveStudent = function(newUser, newStudent, callback){
 	bcrypt.hash(newUser.password, 10, function(err, hash){
-		if(err) throw err;
+		if(err) throw err1;
 		// Set hash
 		newUser.password = hash;
 		console.log('Student is being saved');
@@ -47,7 +47,7 @@ module.exports.saveStudent = function(newUser, newStudent, callback){
 // Save Instructor
 module.exports.saveInstructor = function(newUser, newInstructor, callback){
 	bcrypt.hash(newUser.password, 10, function(err, hash){
-		if(err) throw err;
+		if(err) throw err1;
 		// Set hash
 		newUser.password = hash;
 		console.log('Instructor is being saved');
